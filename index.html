@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="https://kit.fontawesome.com/20a8ac3d61.js" crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" href="styles.css">
+    
+    <link rel="icon" href="./img/logo.png" type="image/x-icon">
+    
+    <title>Project Music</title>
+</head>
+<body>
+    
+    <div class="container">
+        
+        <nav class="sidebar">
+            
+            <div class="nav-logo">
+                <i class="fa-brands fa-spotify"></i>
+            </div>
+            
+            <div class="nav-item" id="home-button">
+                <i class="fa-solid fa-house"></i>
+                <p id="nav-home-text">Início</p>
+            </div>
+
+            <div class="nav-item" id="library-button">
+                <i class="fa-solid fa-book"></i>
+                <p id="nav-library-text">Sua Biblioteca</p>
+            </div>
+            
+            <div class="user-playlists-container">
+                <div class="user-playlists-scroll" id="user-playlists-list">
+                    </div>
+            </div>
+
+            <div class="nav-playlist">
+                <h5 id="nav-playlist-title">Crie sua Primeira Playlist</h5>
+                <p id="nav-playlist-text">é fácil, vamos te ajudar</p>
+                <button id="create-playlist-btn">Criar Playlist</button>
+            </div>
+
+            <div class="nav-podcast">
+                <h5 id="nav-podcast-title">Que tal seguir um podcast?</h5>
+                <p id="nav-podcast-text">Avisaremos você sobre nossos episódios</p>
+                <button id="nav-podcast-button">Explorar Podcasts</button>
+            </div>
+            
+            <div class="nav-footer">
+                <a href="#" id="nav-footer-legal">Legal</a>
+                <a href="#" id="nav-footer-privacy-center">Centro de Privacidade</a>
+                <a href="#" id="nav-footer-privacy-policy">Política de Privacidade</a>
+                <a href="#" id="nav-footer-cookies">Cookies</a>
+                <a href="#" id="nav-footer-ads">Sobre Anúncios</a>
+                <a href="#" id="nav-footer-accessibility">Acessibilidade</a>
+            </div>
+            
+            <button class="nav-lang-button">
+                <i class="fa-solid fa-globe"></i>
+                <span id="nav-lang-text">Português do Brasil</span>
+            </button>
+        </nav>
+
+        <main>
+            <header>
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input class="search-bar" id="search-bar" placeholder="O que você quer ouvir?">
+            </header>
+            
+            <section class="content-section">
+                
+                <div id="search-results-container" class="hidden">
+                    
+                    <div id="search-results-songs-section">
+                        <div class="section-header">
+                            <h2>Músicas</h2>
+                        </div>
+                        <div class="songs-grid" id="search-songs-grid">
+                            </div>
+                    </div>
+
+                    <div id="search-results-artists-section">
+                        <div class="section-header">
+                            <h2>Artistas</h2>
+                        </div>
+                        <div class="artists-grid" id="search-artists-grid">
+                            </div>
+                    </div>
+
+                    <div id="search-no-results" class="hidden">
+                        <p id="search-no-results-message">Nenhum resultado encontrado.</p>
+                    </div>
+                </div>
+
+                <div id="default-content">
+                    
+                    <div class="section-header">
+                        <h2 id="artists-title">Artistas Populares</h2>
+                        <button class="btn-add" id="add-artist-btn" title="Adicionar novo artista" aria-label="Adicionar novo artista">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="artists-grid" id="artists-grid"> 
+                        </div>
+
+                    <div class="section-header">
+                        <h2 id="albums-title">Álbuns Populares</h2>
+                        <button class="btn-add" id="add-album-btn" title="Adicionar novo álbum" aria-label="Adicionar novo álbum">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="albums-grid" id="albums-grid"> 
+                        </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="player-bar">
+        
+        <audio id="audio-player"></audio>
+
+        <div class="player-info">
+            <img src="" alt="Capa" id="player-art">
+            <div>
+                <p id="player-song-title">Nenhuma música tocando</p>
+                <p id="player-song-artist"></p>
+            </div>
+        </div>
+
+        <div class="player-controls">
+            <div class="player-buttons">
+                <button class="btn-control" id="shuffle-button" title="Aleatório" aria-label="Aleatório">
+                    <i class="fa-solid fa-shuffle"></i>
+                </button>
+                <button class="btn-control" id="prev-button" aria-label="Música anterior"><i class="fa-solid fa-backward-step"></i></button>
+                <button class="btn-control btn-play-pause" id="play-pause-button" aria-label="Tocar/Pausar">
+                    <i class="fa-solid fa-play"></i>
+                    <i class="fa-solid fa-pause"></i>
+                </button>
+                <button class="btn-control" id="next-button" aria-label="Próxima música"><i class="fa-solid fa-forward-step"></i></button>
+                <button class="btn-control" id="repeat-button" title="Repetir" aria-label="Repetir">
+                    <i class="fa-solid fa-repeat"></i>
+                    <span class="repeat-badge">1</span>
+                </button>
+            </div>
+            
+            <div class="player-progress">
+                <span id="time-current">0:00</span>
+                <div class="progress-bar-container" id="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                <span id="time-duration">0:00</span>
+            </div>
+        </div>
+
+        <div class="player-extra-controls">
+             <button class="btn-control" id="volume-down-button" aria-label="Diminuir volume"><i class="fa-solid fa-volume-off"></i></button>
+            <div class="volume-bar-container" id="volume-container">
+                <div class="volume-bar" id="volume-bar"></div>
+            </div>
+            <button class="btn-control" id="volume-up-button" aria-label="Aumentar volume"><i class="fa-solid fa-volume-high"></i></button>
+        </div>
+    </footer>
+    
+    <div class="modal-overlay" id="music-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="music-modal-close" aria-label="Fechar modal"><i class="fa-solid fa-times"></i></button>
+            <h3 id="music-modal-title">Adicionar Nova Música</h3>
+            <form id="music-form">
+                <label for="music-name" id="label-music-name">Nome da Música:</label>
+                <input type="text" id="music-name" required>
+                
+                <label for="music-audio-file" id="label-music-audio">Arquivo de Áudio:</label>
+                <input type="file" id="music-audio-file" accept="audio/*" required>
+
+                <div class="form-group hidden" id="music-artist-group">
+                    <label for="music-artist" id="label-music-artist">Nome do Artista:</label>
+                    <input type="text" id="music-artist">
+                </div>
+                <div class="form-group hidden" id="music-image-group">
+                    <label for="music-image" id="label-music-image">URL da Imagem (ex: ./img/capa.jpg):</label>
+                    <input type="text" id="music-image" placeholder="./img/nome-da-capa.jpg">
+                </div>
+                
+                <button type="submit" id="music-submit-btn">Salvar Música</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="album-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="album-modal-close" aria-label="Fechar modal"><i class="fa-solid fa-times"></i></button>
+            <h3 id="album-modal-title">Adicionar Novo Álbum</h3>
+            <form id="album-form">
+                <label for="album-name" id="label-album-name">Nome do Álbum:</label>
+                <input type="text" id="album-name" required>
+                
+                <label for="album-artist" id="label-album-artist">Nome do Artista:</label>
+                <input type="text" id="album-artist" required>
+                
+                <label for="album-image-file" id="label-album-image">Imagem do Álbum:</label>
+                <input type="file" id="album-image-file" accept="image/*" required>
+                
+                <button type="submit" id="album-submit-btn">Salvar Álbum</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="artist-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="artist-modal-close" aria-label="Fechar modal"><i class="fa-solid fa-times"></i></button>
+            <h3 id="artist-modal-title">Adicionar Novo Artista</h3>
+            <form id="artist-form">
+                <label for="artist-name" id="label-artist-name">Nome do Artista:</label>
+                <input type="text" id="artist-name" required>
+                
+                <label for="artist-image-file" id="label-artist-image">Imagem do Artista:</label>
+                <input type="file" id="artist-image-file" accept="image/*" required>
+                
+                <button type="submit" id="artist-submit-btn">Salvar Artista</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="playlist-modal">
+        <div class="modal-content large">
+            <button class="modal-close" id="playlist-modal-close" aria-label="Fechar modal"><i class="fa-solid fa-times"></i></button>
+            <h3 id="playlist-modal-title">Criar nova playlist</h3>
+            <form id="playlist-form">
+                <label for="playlist-name" id="label-playlist-name">Nome da Playlist:</label>
+                <input type="text" id="playlist-name" required>
+                
+                <label id="label-playlist-songs">Selecione as músicas:</label>
+                <div class="song-selection-list" id="playlist-song-list">
+                    </div>
+                
+                <button type="submit" id="playlist-submit-btn">Salvar Playlist</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast-notification" class="toast">
+        </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>

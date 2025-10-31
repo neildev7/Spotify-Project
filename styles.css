@@ -1,0 +1,821 @@
+/* Importa a fonte 'Poppins' do Google Fonts para ser usada em todo o site */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* ============================================= */
+/* =        RESET GLOBAL E ESTILOS BASE        = */
+/* ============================================= */
+
+/* O asterisco (*) seleciona TODOS os elementos da página */
+* {
+    margin: 0; /* Remove todas as margens */
+    padding: 0; /* Remove todos os preenchimentos */
+    /* Faz com que o padding e a borda não aumentem o tamanho total do elemento */
+    box-sizing: border-box; 
+    font-family: "Poppins", sans-serif; /* Define a fonte padrão */
+}
+
+body {
+    background-color: #000; /* Fundo preto */
+    color: #fff; /* Texto branco */
+    /* Deixa um espaço de 90px na parte de baixo para o player não cobrir o conteúdo */
+    padding-bottom: 90px; 
+}
+
+/* CLASSE DE ANIMAÇÃO ".hidden"
+  Usada pelo JavaScript para esconder/mostrar conteúdo com uma animação suave,
+  em vez de simplesmente fazer ele "piscar" (com display: none).
+*/
+.hidden {
+    opacity: 0; /* Fica 100% transparente */
+    max-height: 0; /* Altura 0 (para "recolher") */
+    overflow: hidden; /* Esconde o conteúdo que "vazar" */
+    pointer-events: none; /* Impede que o usuário clique em algo invisível */
+    margin: 0 !important; /* Remove margens para a animação de altura funcionar */
+    padding: 0 !important; /* Remove preenchimentos */
+    display: none !important;
+}
+
+/* ============================================= */
+/* =            LAYOUT PRINCIPAL               = */
+/* ============================================= */
+
+/* O container que segura a sidebar e o conteúdo principal lado a lado */
+.container {
+    display: flex;
+    /* Altura mínima de 100% da tela, menos os 90px do player */
+    min-height: calc(100vh - 90px);
+}
+
+/* ============================================= */
+/* =                SIDEBAR (MENU)             = */
+/* ============================================= */
+.sidebar {
+    width: 300px; /* Largura fixa para o menu lateral */
+    background-color: #121212; /* Cor de fundo da sidebar */
+    padding: 24px;
+    display: flex;
+    flex-direction: column; /* Organiza os itens em uma coluna (um em cima do outro) */
+    gap: 20px; /* Espaço entre os blocos (Logo, Início, Biblioteca, etc) */
+}
+
+.nav-logo i { 
+    font-size: 24px; 
+}
+
+/* --- Botões "Início" e "Biblioteca"  --- */
+.nav-item {
+    display: flex; 
+    align-items: center; /* Alinha o ícone e o texto verticalmente */
+    gap: 10px; 
+    color: #B7B3B6; /* Cor cinza-claro para o texto */
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.2s; /* Animação suave da cor ao passar o mouse */
+}
+.nav-item:hover {
+    color: #fff; /* Texto fica branco ao passar o mouse */
+}
+/* Linha separadora abaixo da biblioteca */
+#library-button {
+    border-bottom: 1px solid #242424;
+    padding-bottom: 10px;
+}
+
+
+/* --- Container das Playlists do Usuário --- */
+.user-playlists-container {
+    flex-grow: 1; /* Faz esta área "crescer" e ocupar o espaço vago */
+    overflow: hidden; /* Garante que o conteúdo não vaze */
+    display: flex;
+    flex-direction: column;
+}
+.user-playlists-scroll {
+    overflow-y: auto; /* Adiciona barra de rolagem VERTICAL se a lista for muito grande */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-right: 10px; /* Espaço para a barra de rolagem não cobrir o texto */
+}
+/* Estilo do nome da playlist (ex: "Meu Pagode") na sidebar */
+.sidebar-playlist-item {
+    color: #b3b3b3;
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    white-space: nowrap; /* Impede que o texto quebre em duas linhas */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Adiciona "..." se o nome for muito longo */
+}
+.sidebar-playlist-item:hover {
+    background-color: #242424;
+    color: #fff;
+}
+
+/* --- Cards Promocionais (Playlist e Podcast) --- */
+.nav-playlist, .nav-podcast { 
+    background-color: #242424; 
+    padding: 16px; 
+    border-radius: 8px; 
+}
+.nav-playlist button, .nav-podcast button { 
+    background-color: #fff; 
+    color: #000; 
+    border: none; 
+    padding: 6px 10px; 
+    margin-top: 16px; 
+    cursor: pointer; 
+    font-size: 14px; 
+    border-radius: 20px; 
+}
+.nav-playlist p, .nav-podcast p { 
+    font-size: 12px; 
+}
+
+/* --- Rodapé da Sidebar (Links) e Botão de Idioma --- */
+.nav-footer { 
+    display: flex; 
+    flex-wrap: wrap; /* Permite que os links quebrem a linha se não couberem */
+    gap: 6px; 
+}
+.nav-footer a { 
+    color: #a7a7a7; 
+    text-decoration: none; 
+    font-size: 12px; 
+}
+.nav-lang-button { 
+    background-color: transparent; 
+    border: 1px solid #fff; 
+    color: #fff; 
+    padding: 8px 12px; 
+    margin-top: 16px; 
+    cursor: pointer; 
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+/* ============================================= */
+/* =        CONTEÚDO PRINCIPAL (MAIN)          = */
+/* ============================================= */
+main {
+    padding: 24px;
+    flex-grow: 1; /* Faz o conteúdo principal ocupar o resto da largura da tela */
+    overflow-y: auto; /* Adiciona scroll vertical se o conteúdo for maior que a tela */
+    width: 100%;
+}
+
+/* --- Header (Barra de Busca) --- */
+header { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    padding: 20px 30px; 
+    background-color: #121212; 
+}
+header i { 
+    color: #b3b3b3; 
+    font-size: 18px; 
+}
+.search-bar { 
+    background-color: #242424; 
+    border: none; 
+    border-radius: 30px; 
+    padding: 10px 16px; 
+    color: #fff; 
+    width: 100%; 
+    max-width: 400px; 
+    outline: none; /* Remove a borda azul feia ao focar no input */
+}
+.search-bar::placeholder { 
+    color: #b3b3b3; 
+}
+
+/* --- Cabeçalho das Seções (Ex: "Artistas Populares" + Botão '+') --- */
+.section-header {
+    display: flex;
+    justify-content: space-between; /* Título na esquerda, botão na direita */
+    align-items: center;
+    margin-bottom: 20px;
+}
+.section-header h2 {
+    margin: 0;
+}
+/* Botão verde de Adicionar (+) */
+.btn-add {
+    background-color: #1DB954; 
+    color: #000;
+    border: none;
+    border-radius: 50%; /* Círculo perfeito */
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+.btn-add:hover {
+    background-color: #1ED760;
+    transform: scale(1.1); /* Efeito de zoom no hover */
+}
+
+/* --- Grids (Artistas, Álbuns, Busca) --- */
+/* Esta classe é usada tanto para o conteúdo popular quanto para os resultados da busca */
+.artists-grid, .albums-grid {
+    display: grid;
+    /* Layout responsivo: cria colunas de no mínimo 180px */
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+/* 
+ * Diferente dos cards, músicas são melhor exibidas como uma lista.
+*/
+.songs-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    /* Adiciona um espaço grande entre a lista de Músicas e a grid de Artistas abaixo dela */
+    margin-bottom: 40px; 
+}
+
+/* 
+ * (O JavaScript precisa criar um HTML com esta classe)
+*/
+.song-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+    cursor: pointer;
+}
+.song-item:hover {
+    background-color: #282828;
+}
+/* Imagem (capa) da música */
+.song-item img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 15px;
+}
+/* Informações (Título e Artista) */
+.song-item-info {
+    flex-grow: 1; /* Ocupa o espaço */
+    min-width: 0; /* Evita que o texto vaze e quebre o layout */
+}
+.song-item-info h4 {
+    font-size: 0.9rem;
+    color: #fff;
+    white-space: nowrap; /* Não quebra a linha */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Adiciona "..." */
+    margin: 0;
+}
+.song-item-info p {
+    font-size: 0.8rem;
+    color: #b3b3b3;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/* Botão de Play que aparece no hover */
+.song-item-play-button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    margin-left: 15px;
+    opacity: 0; /* Escondido por padrão */
+    transition: opacity 0.2s;
+    cursor: pointer;
+}
+.song-item:hover .song-item-play-button {
+    opacity: 1; /* Aparece no hover */
+}
+
+
+/* --- Animação de Fade/Slide para Busca --- */
+/* Define a animação para os containers de conteúdo */
+/* (Esta regra já estava perfeita, não precisa de mudança) */
+#default-content,
+#search-results-container {
+    opacity: 1;
+    max-height: 10000px; /* "auto" animado - um truque de CSS para animação de altura */
+    /* Define a animação: 0.4s para opacidade e 0.4s para altura */
+    transition: opacity 0.4s ease-in-out, max-height 0.4s ease-in-out;
+}
+/* Quando .hidden é adicionado, a animação acontece (veja .hidden no início) */
+
+
+/* --- Mensagem de "Nenhum resultado" --- */
+#search-no-results {
+    color: #b3b3b3;
+    font-style: italic;
+    padding: 20px 0;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+
+/* ============================================= */
+/* =            ESTILOS DOS CARDS              = */
+/* ============================================= */
+/* (Usado para Artistas e Álbuns, na tela inicial e na busca) */
+
+.artist-card, .album-card { 
+    background-color: #181818; 
+    border-radius: 12px; 
+    padding: 16px; 
+    transition: background-color 0.3s; 
+    cursor: pointer; /* Adicionado */
+}
+.artist-card:hover, .album-card:hover { 
+    background-color: #282828; /* Fica cinza escuro no hover */
+}
+
+/* --- Imagem e Botões Sobrepostos --- */
+.card-image-container { 
+    position: relative; /* Define este como o "pai" para os botões 'absolute' */
+    width: 100%; 
+    margin-bottom: 12px; 
+}
+.artist-card img, .album-card img { 
+    width: 100%; 
+    display: block; 
+    object-fit: cover; /* Garante que a imagem cubra o espaço sem distorcer */
+}
+.artist-card img { 
+    border-radius: 50%; /* Artista redondo */
+    aspect-ratio: 1 / 1; /* Garante que seja um círculo perfeito */
+}
+.album-card img { 
+    border-radius: 8px; /* Álbum quadrado */
+    aspect-ratio: 1 / 1;
+}
+
+/* --- Informações (Texto) do Card --- */
+.card-info { 
+    text-align: left; 
+    width: 100%; 
+}
+.card-info h3 { 
+    font-size: 14px; 
+    margin: 0 0 5px 0; 
+    white-space: nowrap; /* Impede quebra de linha */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Adiciona "..." se o nome for muito longo */
+}
+.card-info p { 
+    font-size: 12px; 
+    color: #B7B3B6; 
+    margin: 0; 
+}
+
+/* --- Botões Sobrepostos (Overlay) --- */
+.card-buttons-overlay { 
+    position: absolute; /* Posiciona sobre a imagem */
+    bottom: 8px; 
+    right: 8px; 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; 
+    opacity: 0; /* Começa invisível */
+    transform: translateY(10px); /* Começa 10px abaixo */
+    transition: all 0.3s ease; /* Animação suave de subida e aparição */
+    /* Impede que os botões "capturem" o clique se não estiverem visíveis */
+    pointer-events: none; 
+}
+/* Mostra os botões quando o mouse passa por cima do card PAI */
+.artist-card:hover .card-buttons-overlay, 
+.album-card:hover .card-buttons-overlay { 
+    opacity: 1; /* Fica visível */
+    transform: translateY(0); /* Sobe para a posição original */
+    pointer-events: auto; /* Permite o clique */
+}
+
+/* Botão de Play (Verde) */
+.btn-play { 
+    background-color: #1DB954; 
+    color: #000; 
+    border: none; 
+    border-radius: 50%; 
+    width: 48px; 
+    height: 48px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    font-size: 1.1rem; 
+    cursor: pointer; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); 
+    transition: all 0.2s ease; 
+}
+.btn-play:hover { 
+    transform: scale(1.1); 
+    background-color: #1ED760; 
+}
+
+/* Botão de Adicionar Música (+) no Card */
+.btn-add-song {
+    background-color: #636363; 
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+.btn-add-song:hover {
+    background-color: #848484;
+    transform: scale(1.1);
+}
+
+/* ============================================= */
+/* =         PLAYER BAR (BARRA INFERIOR)       = */
+/* ============================================= */
+.player-bar { 
+    position: fixed; /* Fica fixo na tela */
+    bottom: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 90px; 
+    background-color: #181818; 
+    color: white; 
+    display: grid; /* Layout de 3 colunas */
+    grid-template-columns: 1fr 2fr 1fr; /* Colunas: Esquerda (1fr), Centro (2fr), Direita (1fr) */
+    align-items: center; 
+    padding: 12px 20px; 
+    box-sizing: border-box; 
+    border-top: 1px solid #282828; 
+    display: none; /* JS muda para 'grid' */
+}
+
+/* --- Coluna da Esquerda (Info da Música) --- */
+.player-info { 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; 
+    font-size: 0.9em; 
+    min-width: 0; /* Evita que o texto empurre os outros elementos */
+}
+#player-art { 
+    width: 56px; 
+    height: 56px; 
+    border-radius: 4px; 
+    object-fit: cover; 
+    display: none; /* JS muda para 'block' */
+}
+#player-song-title { 
+    font-weight: 600; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+}
+#player-song-artist { 
+    font-size: 0.8em; 
+    color: #b3b3b3; 
+}
+
+/* --- Coluna Central (Controles) --- */
+.player-controls { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 8px; /* Espaço entre os botões e a barra de progresso */
+}
+.player-buttons { 
+    display: flex; 
+    align-items: center; 
+    gap: 16px; 
+}
+/* Estilo base para TODOS os botões de controle (Play, Next, Shuffle, Repeat) */
+.btn-control { 
+    background: none; 
+    border: none; 
+    color: #b3b3b3; /* Cor Padrão (Inativo) */
+    font-size: 1rem; 
+    cursor: pointer; 
+    transition: color 0.2s; 
+}
+.btn-control:hover { 
+    color: #fff; /* Fica branco no hover */
+}
+
+
+/* Cor verde quando o botão está 'ativo' (JS adiciona a classe) */
+.btn-control#shuffle-button.active,
+.btn-control#repeat-button.active,
+.btn-control#repeat-button.active-song {
+    color: #1DB954; /* Verde Spotify Ativo */
+}
+
+/* Posição relativa para o "1" (badge) */
+.btn-control#repeat-button {
+    position: relative;
+}
+
+/* O "1" que aparece no modo "Repetir Música" */
+.repeat-badge {
+    display: none; /* Escondido por padrão */
+    position: absolute; /* Posicionado em relação ao botão 'repeat' */
+    bottom: -2px;
+    right: -2px;
+    font-size: 0.6rem;
+    background-color: #1DB954;
+    color: #000;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    line-height: 10px; /* Centraliza o "1" */
+    text-align: center;
+    font-weight: bold;
+}
+/* Mostra o "1" apenas quando o JS adiciona a classe .active-song */
+.btn-control#repeat-button.active-song .repeat-badge {
+    display: block;
+}
+
+/* --- Botão Play/Pause Principal --- */
+.btn-play-pause { 
+    background-color: #fff; 
+    color: #000; 
+    width: 36px; 
+    height: 36px; 
+    border-radius: 50%; 
+    font-size: 1rem; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+}
+.btn-play-pause:hover { 
+    transform: scale(1.05); 
+}
+
+/* Lógica CSS para trocar o ícone de Play/Pause */
+.btn-play-pause .fa-pause { 
+    display: none; /* Ícone de Pause começa escondido */
+}
+.btn-play-pause.is-playing .fa-pause { 
+    display: inline-block; /* Mostra o Pause quando a classe .is-playing é adicionada */
+}
+.btn-play-pause.is-playing .fa-play { 
+    display: none; /* Esconde o Play quando a classe .is-playing é adicionada */
+}
+
+/* --- Barra de Progresso da Música --- */
+.player-progress { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    width: 100%; 
+    max-width: 500px; 
+    font-size: 0.75rem; 
+    color: #b3b3b3; 
+}
+.progress-bar-container { 
+    flex-grow: 1; /* Faz a barra ocupar o espaço disponível */
+    height: 4px; 
+    background-color: #535353; 
+    border-radius: 2px; 
+    cursor: pointer; 
+}
+.progress-bar { 
+    height: 100%; 
+    width: 0%; /* O JS controla a largura (progresso da música) */
+    background-color: #fff; 
+    border-radius: 2px; 
+    transition: width 0.1s linear; /* Animação suave (evita "pulos") */
+}
+.progress-bar-container:hover .progress-bar { 
+    background-color: #1DB954; /* Fica verde no hover */
+}
+
+/* --- Coluna da Direita (Volume) --- */
+.player-extra-controls { 
+    display: flex; 
+    justify-content: flex-end; /* Alinha à direita */
+    align-items: center; 
+    gap: 10px; 
+    width: 100%; 
+}
+.volume-bar-container { 
+    width: 100px; 
+    height: 4px; 
+    background-color: #535353; 
+    border-radius: 2px; 
+    cursor: pointer; 
+}
+.volume-bar { 
+    height: 100%; 
+    width: 100%; /* O JS controla a largura (nível do volume) */
+    background-color: #fff; 
+    border-radius: 2px; 
+}
+.volume-bar-container:hover .volume-bar { 
+    background-color: #1DB954; /* Fica verde no hover */
+}
+
+/* ============================================= */
+/* =        ESTILOS DOS MODAIS (POP-UPS)       = */
+/* ============================================= */
+    
+/* O fundo cinza semi-transparente que cobre a tela */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none; /* JS muda para 'flex' */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Garante que fique acima de todo o resto */
+}
+/* Classe adicionada pelo JS para mostrar o modal */
+.modal-overlay.active {
+    display: flex; 
+}
+
+/* O conteúdo (caixa) do modal */
+.modal-content {
+    background-color: #282828;
+    padding: 24px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    position: relative; /* Contexto para o botão 'X' */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Modificador para o modal de Playlist (maior e com altura definida) */
+.modal-content.large {
+    max-width: 700px;
+    height: 70vh; /* 70% da altura da tela */
+}
+
+/* Botão 'X' de fechar */
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #b3b3b3;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.modal-close:hover {
+    color: #fff;
+}
+
+.modal-content h3 {
+    margin-bottom: 20px;
+}
+
+/* --- Formulários dentro dos Modais --- */
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espaço entre os inputs */
+    flex-grow: 1; /* Ocupa o espaço (importante p/ modal de playlist) */
+    overflow: hidden; /* Garante que o scroll fique contido dentro do form */
+}
+.modal-content form label {
+    font-size: 0.9rem;
+    color: #b3b3b3;
+}
+.modal-content form input {
+    background-color: #333;
+    border: 1px solid #535353;
+    color: #fff;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 1rem;
+    width: 100%;
+}
+.modal-content form input::placeholder {
+    color: #777;
+}
+
+/* Estilização customizada para o Input de Arquivo (Upload) */
+.modal-content form input[type="file"] {
+    background-color: #333;
+    padding: 10px;
+    font-size: 0.9rem;
+    color: #b3b3b3;
+}
+/* Estiliza o botão "Escolher arquivo" (para navegadores Webkit como Chrome/Safari) */
+.modal-content form input[type="file"]::-webkit-file-upload-button {
+    background-color: #535353;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.2s;
+}
+.modal-content form input[type="file"]::-webkit-file-upload-button:hover {
+    background-color: #1DB954;
+    color: #000;
+}
+
+/* Botão de Envio (Submit) do Formulário */
+.modal-content form button[type="submit"] {
+    background-color: #1DB954;
+    color: #000;
+    border: none;
+    padding: 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 10px;
+}
+.modal-content form button[type="submit"]:hover {
+    background-color: #1ED760;
+    transform: scale(1.02);
+}
+
+/* Classe helper para esconder campos (Artista/Imagem no modal de música) */
+.form-group.hidden {
+    display: none;
+}
+
+/* --- Lista de Músicas (Dentro do Modal de Playlist) --- */
+.song-selection-list {
+    flex-grow: 1; /* Faz a lista ocupar o espaço vago no modal */
+    overflow-y: auto; /* Adiciona scroll se a lista for longa */
+    background-color: #121212; /* Fundo mais escuro */
+    border-radius: 4px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.playlist-song-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+.playlist-song-item:hover {
+    background-color: #282828;
+}
+.playlist-song-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+.playlist-song-item label {
+    font-size: 0.9rem;
+    color: #fff;
+    cursor: pointer; /* Para o usuário poder clicar no texto e marcar o checkbox */
+}
+
+/* ============================================= */
+/* =    NOTIFICAÇÃO "TOAST" (Substituto do Alert) = */
+/* ============================================= */
+#toast-notification {
+    visibility: hidden; /* Começa 100% invisível e inacessível */
+    position: fixed; /* Fica fixo na tela */
+    bottom: 100px; /* Acima do player bar (que tem 90px) */
+    left: 24px;
+    background-color: #1DB954; /* Verde Spotify */
+    color: #000; /* Texto preto para contraste */
+    font-weight: 500;
+    padding: 12px 20px;
+    border-radius: 8px;
+    z-index: 2000; /* Acima de todo o resto (inclusive modais) */
+    opacity: 0;
+    /* Animação suave de 0.5s para opacidade e posição */
+    transition: opacity 0.5s, bottom 0.5s; 
+}
+
+/* Classe 'show' que o JS vai adicionar para mostrar o toast */
+#toast-notification.show {
+    visibility: visible;
+    opacity: 1;
+    bottom: 110px; /* Sobe 10px (para um efeito de "subida") */
+}
