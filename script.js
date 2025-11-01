@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cardAddSongTitle: "Adicionar música a este álbum",
             cardAddAlbumTitle: "Adicionar novo álbum",
             cardAddArtistTitle: "Adicionar novo artista",
-            // Seção de Busca (TÍTULOS CORRIGIDOS)
+            // Seção de Busca 
             searchTitleSongs: "Músicas",
             searchTitleArtists: "Artistas",
             searchNoResults: "Nenhum resultado encontrado para",
@@ -385,7 +385,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // =========================================================================
     // 7. FUNÇÕES DE CONTROLE DO PLAYER
     // =========================================================================
-    // (Esta seção não precisava de NENHUMA alteração)
 
     /**
      * Função: formatTime
@@ -616,7 +615,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // =========================================================================
     // 9. "OUVINTES" DE EVENTOS DE VOLUME
     // =========================================================================
-    // (Esta seção não precisava de NENHUMA alteração)
+
     
     volumeDownBtn.addEventListener('click', () => {
         currentVolume = Math.max(0, currentVolume - 0.1);
@@ -639,14 +638,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     
     // =========================================================================
-    // 10. LÓGICA DE BUSCA (A LÓGICA PRINCIPAL QUE FOI CORRIGIDA)
+    // 10. LÓGICA DE BUSCA 
     // =========================================================================
 
     // "Ouve" o evento 'input' (cada vez que o usuário digita)
     searchBar.addEventListener('input', handleSearch);
 
     /**
-     * Função: handleSearch (MODIFICADA E CORRIGIDA)
+     * Função: handleSearch 
      * Objetivo: Filtra MÚSICAS e ARTISTAS e mostra os resultados em seções separadas.
      */
     function handleSearch(event) {
@@ -728,7 +727,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // =========================================================================
 
     /**
-     * Função: renderSearchResults (MODIFICADA E CORRIGIDA)
+     * Função: renderSearchResults 
      * Objetivo: Limpa e desenha os grids de MÚSICAS e ARTISTAS.
      * @param {Array} songs - Array de Músicas encontradas.
      * @param {Array} artists - Array de Artistas encontrados.
